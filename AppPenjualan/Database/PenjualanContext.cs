@@ -14,10 +14,15 @@ namespace AppPenjualan.Database
         public DbSet<Transactions> Transactions { get; set; }
         public DbSet<TransactionDetails> TransactionDetails { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public PenjualanContext(DbContextOptions<PenjualanContext> options) : base(options)
         {
-            var connStr = "Server=FAIRUZ-PC\\SQLEXPRESS;Database=Penjualan;Trusted_Connection=True;TrustServerCertificate=True;";
-            optionsBuilder.UseSqlServer(connStr);
+
         }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    var connStr = "Server=FAIRUZ-PC\\SQLEXPRESS;Database=Penjualan;Trusted_Connection=True;TrustServerCertificate=True;";
+        //    optionsBuilder.UseSqlServer(connStr);
+        //}
     }
 }

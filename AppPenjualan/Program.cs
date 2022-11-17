@@ -13,19 +13,53 @@
 //Transaction ---> TranDate dan TranCode
 //TransactionDetail ---> Product Yang dibeli
 using AppPenjualan.Application.ProductServices;
+using AppPenjualan.Application.SupplierServices;
 using AppPenjualan.ConfigProfile;
 using AppPenjualan.Database;
 using AppPenjualan.Views.ProductViews;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using AppPenjualan;
+using AppPenjualan.Views.TransactionViews;
+using AppPenjualan.Views.ReportViews;
 
 class Program
 {
     static void Main()
     {
-        var config = new AutoMapper.MapperConfiguration(cfg=>
-        {
-            cfg.AddProfile(new ConfigurationProfile());
-        });
+        #region Hide
+        /*
+         *Dependency Injection merupakan sebuah teknik untuk mengatur cara
+         *bagaimana suatu objek dibentuk ketika terdapat objek lain yang membutuhkan. 
+         */
+
+        //var serviceProvider = new ServiceCollection()
+        //.AddLogging()
+        //// Singleton,Transient dan Scoped
+        //// Singleton = Object di create cuma 1x, setiap request akan memakai object yg sama
+        //// Transient = Object akan di create setiap kali request untuk dicreate
+        //// Scoped = object dicreate 1x tapi berbeda dalam setiap request
+
+        //.AddSingleton<IProductAppService, ProductAppService>()
+        //.AddSingleton<ProductView>(x =>
+        //             new ProductView(x.GetService<IProductAppService>()))
+        //.BuildServiceProvider();
+
+        //var productAppService = serviceProvider.GetService<IProductAppService>();
+        //var productView = serviceProvider.GetService<ProductView>();
+
+        //IServiceCollection services = new ServiceCollection();
+        //Startup startup = new Startup();
+        //startup.ConfigureServices(services);
+        //IServiceProvider serviceProvider = services.BuildServiceProvider();
+        #endregion
+
+        Startup startup = new Startup();
+        var productView = startup.Provider.GetService<ProductView>();
+        var tranView = startup.Provider.GetService<TransactionView>();
+        var reportView = startup.Provider.GetService<ReportView>();
 
         bool showMenu = true;
         while (showMenu)
@@ -45,10 +79,10 @@ class Program
             {
                 case "1":
                     // View
-                    var penjualanContext = new PenjualanContext();
-                    IMapper mapper = new Mapper(config);
-                    IProductAppService productAppService = new ProductAppService(penjualanContext, mapper);
-                    var productView = new ProductView(productAppService);
+                    //var penjualanContext = new PenjualanContext();
+                    //IMapper mapper = new Mapper(config);
+                    //IProductAppService productAppService = new ProductAppService(penjualanContext, mapper);
+                    //var productView = new ProductView(productAppService);
                     productView.DisplayView();
                     showMenu = true;
                     break;
@@ -58,10 +92,12 @@ class Program
                     break;
                 case "3":
                     // View
+                    tranView.DisplayView();
                     showMenu = true;
                     break;
                 case "4":
                     // View
+                    reportView.DisplayView();
                     showMenu = true;
                     break;
                 case "5":

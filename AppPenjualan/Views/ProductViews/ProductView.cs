@@ -36,9 +36,9 @@ namespace AppPenjualan.Views.ProductViews
                 var pageInfo = new PageInfo(page, pageSize);
                 var productList = _productAppService.GetAllProducts(pageInfo);
 
-                var totalPage = productList.Total / pageSize;
+                decimal totalPage = productList.Total / pageSize;
 
-                Console.WriteLine($"Display Page : {page} with total page : {Math.Abs(totalPage)}");
+                Console.WriteLine($"Display Page : {page} with total page : {(int)Math.Ceiling(totalPage)}");
 
                 foreach (var product in productList.Data)
                 {
@@ -81,6 +81,8 @@ namespace AppPenjualan.Views.ProductViews
                     switch (Console.ReadLine())
                     {
                         case "1":
+                            var createView = new CreateProductView(_productAppService);
+                            createView.DisplayView();
                             showMenu = true;
                             break;
                         case "2":

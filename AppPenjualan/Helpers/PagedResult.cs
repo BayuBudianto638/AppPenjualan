@@ -13,10 +13,12 @@ namespace AppPenjualan.Helpers
             Data = data;
             Total = total;
         }
+
         public PagedResult()
         {
 
         }
+
         public IEnumerable<T> Data { get; set; }
         public long Total { get; set; }
     }

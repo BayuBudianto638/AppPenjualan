@@ -1,4 +1,6 @@
-﻿using AppPenjualan.Application.TransactionServices.Dto;
+﻿using AppPenjualan.Application.ProductServices.Dto;
+using AppPenjualan.Application.TransactionServices.Dto;
+using AppPenjualan.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,8 @@ namespace AppPenjualan.Application.TransactionServices
     public interface ITransactionAppService
     {
         int Create(CreateTransactionDto model);
-        List<TransactionListDto> GetAllTransactions();
+        void UpdateTotal(int TransId, int Total);
+        PagedResult<TransactionListDto> GetAllTransactions(PageInfo pageinfo);
+        PagedResult<TransactionListDto> SearchTransaction(string searchString, PageInfo pageInfo);
     }
 }
